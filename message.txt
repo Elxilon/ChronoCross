@@ -1,0 +1,122 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema provisoire2
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema provisoire2
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `provisoire2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `provisoire2` ;
+
+-- -----------------------------------------------------
+-- Table `provisoire2`.`manifestations`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `provisoire2`.`manifestations` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(255) NOT NULL,
+  `slug` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 104
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `provisoire2`.`course`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `provisoire2`.`course` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_manifestation` INT NOT NULL,
+  `nom` VARCHAR(255) NOT NULL,
+  `distance` FLOAT NOT NULL,
+  `heure_depart` TIME NULL DEFAULT NULL,
+  `heure_depart_theorique` TIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_course_manifestation_2` (`id_manifestation` ASC) VISIBLE,
+  CONSTRAINT `fk_course_manifestation_2`
+    FOREIGN KEY (`id_manifestation`)
+    REFERENCES `provisoire2`.`manifestations` (`id`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 71
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `provisoire2`.`utilisateurs`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `provisoire2`.`utilisateurs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(50) NOT NULL,
+  `prenom` VARCHAR(50) NOT NULL,
+  `classe` VARCHAR(50) NOT NULL,
+  `age` INT NOT NULL,
+  `sexe` VARCHAR(1) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `provisoire2`.`course_has_coureur`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `provisoire2`.`course_has_coureur` (
+  `Course_idCourse` INT NOT NULL,
+  `Coureur_idCoureur` INT NOT NULL,
+  `idUtilisateur` INT NOT NULL,
+  `Classement` INT NULL DEFAULT NULL,
+  `NumeroDossard` VARCHAR(24) NOT NULL,
+  `Temps` TIME NULL DEFAULT NULL,
+  `Presence` ENUM('A', 'P') NULL DEFAULT 'A',
+  PRIMARY KEY (`Course_idCourse`, `Coureur_idCoureur`),
+  INDEX `idUtilisateur` (`idUtilisateur` ASC) VISIBLE,
+  CONSTRAINT `fk_course_has_coureur_utilisateurs`
+    FOREIGN KEY (`idUtilisateur`)
+    REFERENCES `provisoire2`.`utilisateurs` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `provisoire2`.`tokens`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `provisoire2`.`tokens` (
+  `id` INT NOT NULL,
+  `token` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `provisoire2`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `provisoire2`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `is_admin` TINYINT(1) NULL DEFAULT '0',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
