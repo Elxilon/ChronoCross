@@ -1,5 +1,5 @@
 <?php
-//require "database.php";
+//require "Database.php";
 //$db = new Database();
 ?>
 
@@ -33,21 +33,21 @@ $courses = [
         'nom' => "course_1",
         'distance' => 10,
         'heure_depart' => null,
-        'heure_depart_theorique' => getdate(),
+        'heure_depart_theorique' => '10:40:00',
         'coureurs' => [
             [
                 'nom_prenom' => 'DUTROUC Marc',
-                'Temps' => hrtime(),
+                'Temps' => '14:40:00',
                 'Classement' => 1,
             ],
             [
                 'nom_prenom' => 'DUPONT DE LIGONNES Xavier',
-                'Temps' => hrtime(),
+                'Temps' => '14:50:00',
                 'Classement' => 2,
             ],
             [
                 'nom_prenom' => 'SPIGARELLI Thomas',
-                'Temps' => hrtime(),
+                'Temps' => '12:00:00',
                 'Classement' => 3,
             ],
         ],
@@ -57,8 +57,8 @@ $courses = [
         'token' => 2,
         'nom' => "course_2",
         'distance' => 8,
-        'heure_depart' => getdate(),
-        'heure_depart_theorique' => getdate(),
+        'heure_depart' => '11:40:00',
+        'heure_depart_theorique' => '11:40:00',
         'coureurs' => [],
     ],
     [
@@ -66,8 +66,8 @@ $courses = [
         'token' => 6,
         'nom' => "course_3",
         'distance' => 26,
-        'heure_depart' => getdate(),
-        'heure_depart_theorique' => getdate(),
+        'heure_depart' => '9:40:00',
+        'heure_depart_theorique' => '9:40:00',
         'coureurs' => [],
     ],
     [
@@ -75,8 +75,8 @@ $courses = [
         'token' => 6,
         'nom' => "course_4",
         'distance' => 22,
-        'heure_depart' => getdate(),
-        'heure_depart_theorique' => getdate(),
+        'heure_depart' => '8:40:00',
+        'heure_depart_theorique' => '8:40:00',
         'coureurs' => [],
     ],
     [
@@ -84,8 +84,8 @@ $courses = [
         'token' => 6,
         'nom' => "course_5",
         'distance' => 26,
-        'heure_depart' => getdate(),
-        'heure_depart_theorique' => getdate(),
+        'heure_depart' => '11:40:00',
+        'heure_depart_theorique' => '11:40:00',
         'coureurs' => [],
     ],
     [
@@ -93,8 +93,8 @@ $courses = [
         'token' => 6,
         'nom' => "course_6",
         'distance' => 26,
-        'heure_depart' => getdate(),
-        'heure_depart_theorique' => getdate(),
+        'heure_depart' => null,
+        'heure_depart_theorique' => '11:40:00',
         'coureurs' => [],
     ]
 ]
@@ -137,9 +137,7 @@ $courses = [
                 </p>
                 <p class="column_sized"><?= $course['distance'] ?> km</p>
                 <p style="max-width: 135px">
-                    <?= isset($course['heure_depart']) ?
-                        $course['heure_depart']["hours"] . "h" . $course['heure_depart']["minutes"] :
-                        $course['heure_depart_theorique']["hours"] . "h" . $course['heure_depart_theorique']["minutes"] ?>
+                    <?= date("h\hi A", strtotime($course['heure_depart'] ?? $course['heure_depart_theorique'])); ?>
                 </p>
             </div>
             <div class="array-item-results hide">
