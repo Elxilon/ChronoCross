@@ -6,7 +6,7 @@ $db = new Database();
 <script>
     setInterval(() => {
         <?php $courses = $db->getAllCourses(); ?>
-    }, 5000);
+    }, 1000);
 </script>
 
 <?php
