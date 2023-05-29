@@ -1,11 +1,15 @@
 <?php
+//require "database.php";
+//$db = new Database();
+?>
 
-/*
-require "database.php";
-$db = new Database();
-$courses = $db->getAllCourses();
-*/
+<script>
+    setInterval(() => {
+        <?php // $courses = $db->getAllCourses(); ?>
+    }, 1000);
+</script>
 
+<?php
 $token_icon = [
     '1' => "img/hourglass_empty.svg",
     '2' => "img/hourglass_top.svg",
@@ -15,7 +19,13 @@ $token_icon = [
     '6' => "img/hourglass_bottom.svg",
 ];
 
-// temporaire, à enlever quand BDD connectée
+$medal_icon = [
+    '1' => "img/medal-1.svg",
+    '2' => "img/medal-2.svg",
+    '3' => "img/medal-3.svg",
+];
+
+// temporaire, à commenter quand BDD connectée
 $courses = [
     [
         'id' => 0,
@@ -24,6 +34,23 @@ $courses = [
         'distance' => 10,
         'heure_depart' => null,
         'heure_depart_theorique' => getdate(),
+        'coureurs' => [
+            [
+                'nom_prenom' => 'DUTROUC Marc',
+                'Temps' => hrtime(),
+                'Classement' => 1,
+            ],
+            [
+                'nom_prenom' => 'DUPONT DE LIGONNES Xavier',
+                'Temps' => hrtime(),
+                'Classement' => 2,
+            ],
+            [
+                'nom_prenom' => 'SPIGARELLI Thomas',
+                'Temps' => hrtime(),
+                'Classement' => 3,
+            ],
+        ],
     ],
     [
         'id' => 1,
@@ -32,6 +59,7 @@ $courses = [
         'distance' => 8,
         'heure_depart' => getdate(),
         'heure_depart_theorique' => getdate(),
+        'coureurs' => [],
     ],
     [
         'id' => 2,
@@ -40,6 +68,7 @@ $courses = [
         'distance' => 26,
         'heure_depart' => getdate(),
         'heure_depart_theorique' => getdate(),
+        'coureurs' => [],
     ],
     [
         'id' => 3,
@@ -48,6 +77,7 @@ $courses = [
         'distance' => 22,
         'heure_depart' => getdate(),
         'heure_depart_theorique' => getdate(),
+        'coureurs' => [],
     ],
     [
         'id' => 4,
@@ -56,6 +86,7 @@ $courses = [
         'distance' => 26,
         'heure_depart' => getdate(),
         'heure_depart_theorique' => getdate(),
+        'coureurs' => [],
     ],
     [
         'id' => 5,
@@ -64,6 +95,7 @@ $courses = [
         'distance' => 26,
         'heure_depart' => getdate(),
         'heure_depart_theorique' => getdate(),
+        'coureurs' => [],
     ]
 ]
 
@@ -111,27 +143,22 @@ $courses = [
                 </p>
             </div>
             <div class="array-item-results hide">
-                <div class="coureur-item">
-                    <img src="img/medal-1.svg" />
-                    <div>
-                        <p class="coureur-name">DUTROUC Marc</p>
-                        <p class="coureur-time">1:69:042</p>
+                <?php
+                // si la liste n'est pas vide on liste les coureurs qui ont finit la course,
+                // sinon on n'affiche qu'un texte générique
+                if (!empty($course['coureurs'])) : ?>
+                <?php foreach ($course['coureurs'] as $coureur) : ?>
+                    <div class="coureur-item">
+                        <img src="<?= $medal_icon[$coureur['Classement']] ?>" />
+                        <div>
+                            <p class="coureur-name"><?= $coureur['nom_prenom'] ?></p>
+                            <p class="coureur-time"><?= $coureur['Temps'] ?></p>
+                        </div>
                     </div>
-                </div>
-                <div class="coureur-item">
-                    <img src="img/medal-2.svg" />
-                    <div>
-                        <p class="coureur-name">DUPONT DE LIGONNES Xavier</p>
-                        <p class="coureur-time">1:42:069</p>
-                    </div>
-                </div>
-                <div class="coureur-item">
-                    <img src="img/medal-3.svg" />
-                    <div>
-                        <p class="coureur-name">SPIGARELLI Thomas</p>
-                        <p class="coureur-time">UNKWOWN</p>
-                    </div>
-                </div>
+                <?php endforeach; ?>
+                <?php else : ?>
+                    <p>Aucun coureur n'a terminé la course...</p>
+                <?php endif; ?>
             </div>
             <?php endforeach; ?>
         </div>
@@ -139,4 +166,3 @@ $courses = [
     <script type="text/javascript" src="script.js"></script>
  </body>
 </html>
-
