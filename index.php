@@ -1,12 +1,12 @@
 <?php
-//require "Database.php";
-//$db = new Database();
+require "Database.php";
+$db = new Database();
 ?>
 
 <script>
     setInterval(() => {
-        <?php // $courses = $db->getAllCourses(); ?>
-    }, 1000);
+        <?php $courses = $db->getAllCourses(); ?>
+    }, 5000);
 </script>
 
 <?php
@@ -26,7 +26,7 @@ $medal_icon = [
 ];
 
 // temporaire, à commenter quand BDD connectée
-$courses = [
+/*$courses = [
     [
         'id' => 0,
         'token' => 1,
@@ -97,7 +97,7 @@ $courses = [
         'heure_depart_theorique' => '11:40:00',
         'coureurs' => [],
     ]
-]
+]*/
 
 ?>
 
@@ -111,20 +111,20 @@ $courses = [
  <body>
     <div id="container">
         <div id="title">
-            <img src="img/running.svg" />
+            <img src="img/running.svg" alt="running" />
             <h1>ChronoCross</h1>
         </div>
         <div id="array-header">
             <div class="column_type">
-                <img src="img/nom.svg" />
+                <img src="img/nom.svg" alt="nom" />
                 <p>Nom</p>
             </div>
             <div class="column_type column_sized">
-                <img src="img/dist.svg" />
+                <img src="img/dist.svg" alt="dist" />
                 <p>Distance</p>
             </div>
             <div class="column_type column_sized">
-                <img src="img/timer.svg" />
+                <img src="img/timer.svg" alt="timer" />
                 <p>Heure départ</p>
             </div>
         </div>
@@ -132,7 +132,7 @@ $courses = [
             <?php foreach ($courses as $course): ?>
             <div class="array-item">
                 <p class="item-name">
-                    <img src="<?= $token_icon[$course['token']] ?>">
+                    <img src="<?= $token_icon[$course['token']] ?>" alt="token_icon">
                     <?= $course['nom'] ?>
                 </p>
                 <p class="column_sized"><?= $course['distance'] ?> km</p>
@@ -147,7 +147,7 @@ $courses = [
                 if (!empty($course['coureurs'])) : ?>
                 <?php foreach ($course['coureurs'] as $coureur) : ?>
                     <div class="coureur-item">
-                        <img src="<?= $medal_icon[$coureur['Classement']] ?>" />
+                        <img src="<?= $medal_icon[$coureur['Classement']] ?>" alt="classement" />
                         <div>
                             <p class="coureur-name"><?= $coureur['nom_prenom'] ?></p>
                             <p class="coureur-time"><?= $coureur['Temps'] ?></p>
